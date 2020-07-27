@@ -12,5 +12,9 @@ func main() {
 	fmt.Println(list)
 	fmt.Println(list.Pop())
 	fmt.Println(list.Pop())
-	fmt.Println(list)
+	fmt.Println(list.Pop())
+	fmt.Println(list.IsEmpty())
+
+	list.Push("abc")
+	fmt.Println(list.Pop())
 }
