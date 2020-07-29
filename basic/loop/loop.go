@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"os"
 	"strconv"
 )
@@ -30,6 +31,10 @@ func printFile(filename string)  {
 	for scanner.Scan() {
 		fmt.Println(scanner.Text())
 	}
+}
+
+func printContents(reader io.Reader) {
+
 }
 
 func forever()  {
