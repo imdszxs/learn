@@ -4,16 +4,9 @@ import (
 	"bufio"
 	"fmt"
 	"io"
+	"learn/addr/fib"
 	"strings"
 )
-//斐波那契数列
-func fibonacci() func() int {
-	a,b := 0,1
-	return func() int {
-		a,b = b,a+b
-		return a
-	}
-}
 
 type intGen func() int
 
@@ -35,7 +28,7 @@ func printFibContents(reader io.Reader) {
 }
 
 func main() {
-	var f intGen = fibonacci()
+	var f intGen = fib.Fibonacci()
 	printFibContents(f)
 
 	//fmt.Println(f())
