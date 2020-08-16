@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"learn/addr/fib"
 	"os"
@@ -17,9 +18,15 @@ func tryDefer()  {
 }
 
 func writeFile(filename string) {
-	file, err := os.Create(filename)
+	file, err := os.OpenFile(filename, os.O_EXCL|os.O_CREATE, 0666)
+	err = errors.New("this is a custom error")
 	if err != nil {
-		panic(err)
+		if pathError, ok := err.(*os.PathError); !ok {
+			panic(err)
+		} else {
+			fmt.Printf("%s %s %s", pathError.Path, pathError.Op, pathError.Err)
+		}
+		return
 	}
 	defer file.Close()
 
