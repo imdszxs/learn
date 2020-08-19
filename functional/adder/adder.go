@@ -19,15 +19,12 @@ func adder2(base int) iAdder {
 }
 
 func main() {
-	//a := adder()
-	//for i := 0; i < 10; i++ {
-	//	fmt.Printf("0 + 1 + ... + %d = %d\n", i, a(i))
-	//}
-
+	// a := adder() is trivial and also works.
 	a := adder2(0)
 	for i := 0; i < 10; i++ {
 		var s int
 		s, a = a(i)
-		fmt.Printf("0 + 1 + ... + %d = %d\n", i, s)
+		fmt.Printf("0 + 1 + ... + %d = %d\n",
+			i, s)
 	}
 }

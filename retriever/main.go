@@ -2,12 +2,12 @@ package main
 
 import (
 	"fmt"
-	"learn/retriever/mooc"
-	"learn/retriever/real"
-	"time"
-)
 
-const url = "https://www.imooc.com"
+	"time"
+
+	"imooc.com/ccmouse/learngo/lang/retriever/mock"
+	"imooc.com/ccmouse/learngo/lang/retriever/real"
+)
 
 type Retriever interface {
 	Get(url string) string
@@ -18,15 +18,17 @@ type Poster interface {
 		form map[string]string) string
 }
 
+const url = "http://www.imooc.com"
+
 func download(r Retriever) string {
 	return r.Get(url)
 }
 
-func post(p Poster)  {
-	p.Post(url,
+func post(poster Poster) {
+	poster.Post(url,
 		map[string]string{
-			"name":"imdszxs",
-			"course":"golang",
+			"name":   "ccmouse",
+			"course": "golang",
 		})
 }
 
@@ -42,36 +44,41 @@ func session(s RetrieverPoster) string {
 	return s.Get(url)
 }
 
-func inspect(r Retriever) {
-	fmt.Printf("%T %v\n", r, r)
-	switch v := r.(type) {
-	case *mooc.Retriever:
-		fmt.Println("contents:", v.Contents)
-	case real.Retriever:
-		fmt.Println("userAgent:", v.UserAgent)
-	}
-}
-
 func main() {
-	var r Retriever = &mooc.Retriever{"this is fake imooc.com"}
+	var r Retriever
+
+	mockRetriever := mock.Retriever{
+		Contents: "this is a fake imooc.com"}
+	r = &mockRetriever
 	inspect(r)
 
-	r = real.Retriever{
+	r = &real.Retriever{
 		UserAgent: "Mozilla/5.0",
-		TimeOut: time.Minute,
+		TimeOut:   time.Minute,
 	}
 	inspect(r)
 
-	// type assertion
-	if moocRetriever, ok := r.(*mooc.Retriever); ok {
-		fmt.Println(moocRetriever.Contents)
+	// Type assertion
+	if mockRetriever, ok := r.(*mock.Retriever); ok {
+		fmt.Println(mockRetriever.Contents)
 	} else {
-		fmt.Println("not a mooc retriever")
+		fmt.Println("r is not a mock retriever")
 	}
 
-	fmt.Println("try a session")
-	s := mooc.Retriever{"this is fake imooc.com"}
-	fmt.Println(session(&s))
+	fmt.Println(
+		"Try a session with mockRetriever")
+	fmt.Println(session(&mockRetriever))
 }
 
-
+func inspect(r Retriever) {
+	fmt.Println("Inspecting", r)
+	fmt.Printf(" > Type:%T Value:%v\n", r, r)
+	fmt.Print(" > Type switch: ")
+	switch v := r.(type) {
+	case *mock.Retriever:
+		fmt.Println("Contents:", v.Contents)
+	case *real.Retriever:
+		fmt.Println("UserAgent:", v.UserAgent)
+	}
+	fmt.Println()
+}

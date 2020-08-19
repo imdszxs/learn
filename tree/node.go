@@ -3,27 +3,23 @@ package tree
 import "fmt"
 
 type Node struct {
-	Value int
-	Left *Node
-	Right *Node
+	Value       int
+	Left, Right *Node
 }
 
 func (node Node) Print() {
-	fmt.Printf("%d", node.Value)
+	fmt.Print(node.Value, " ")
 }
 
-func (node *Node) Traverse() {
-	node.TraverseFunc(func(n *Node) {
-		n.Print()
-	})
-	fmt.Println()
-}
-
-func (node *Node) TraverseFunc(f func(*Node)) {
-	if(node == nil){
+func (node *Node) SetValue(value int) {
+	if node == nil {
+		fmt.Println("Setting Value to nil " +
+			"node. Ignored.")
 		return
 	}
-	node.Left.TraverseFunc(f)
-	f(node)
-	node.Right.TraverseFunc(f)
+	node.Value = value
+}
+
+func CreateNode(value int) *Node {
+	return &Node{Value: value}
 }

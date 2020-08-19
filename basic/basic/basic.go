@@ -15,7 +15,7 @@ var (
 func variableZeroValue() {
 	var a int
 	var s string
-	fmt.Printf("%d, %q\n", a, s)
+	fmt.Printf("%d %q\n", a, s)
 }
 
 func variableInitialValue() {
@@ -24,21 +24,20 @@ func variableInitialValue() {
 	fmt.Println(a, b, s)
 }
 
-func variableTypeDeduction()  {
+func variableTypeDeduction() {
 	var a, b, c, s = 3, 4, true, "def"
 	fmt.Println(a, b, c, s)
 }
 
-func variableShorter()  {
+func variableShorter() {
 	a, b, c, s := 3, 4, true, "def"
 	b = 5
 	fmt.Println(a, b, c, s)
 }
 
 func euler() {
-	fmt.Printf("%.3f %.3f\n",
-		cmplx.Exp(1i * math.Pi) + 1,
-		cmplx.Pow(math.E, 1i * math.Pi) + 1)
+	fmt.Printf("%.3f\n",
+		cmplx.Exp(1i*math.Pi)+1)
 }
 
 func triangle() {
@@ -52,21 +51,23 @@ func calcTriangle(a, b int) int {
 	return c
 }
 
-func consts()  {
-	const filename string = "abc.txt"
-	const a, b  = 3, 4
+func consts() {
+	const (
+		filename = "abc.txt"
+		a, b     = 3, 4
+	)
 	var c int
 	c = int(math.Sqrt(a*a + b*b))
-	fmt.Println(c)
+	fmt.Println(filename, c)
 }
 
 func enums() {
-	const(
+	const (
 		cpp = iota
-		java
-		php
+		_
 		python
 		golang
+		javascript
 	)
 
 	const (
@@ -77,7 +78,8 @@ func enums() {
 		tb
 		pb
 	)
-	fmt.Println(cpp, java, php, python, golang)
+
+	fmt.Println(cpp, javascript, python, golang)
 	fmt.Println(b, kb, mb, gb, tb, pb)
 }
 

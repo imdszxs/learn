@@ -6,12 +6,10 @@ import (
 	"io"
 	"os"
 	"strconv"
+	"strings"
 )
 
 func convertToBin(n int) string {
-	if n == 0 {
-		return strconv.Itoa(0)
-	}
 	result := ""
 	for ; n > 0; n /= 2 {
 		lsb := n % 2
@@ -20,36 +18,49 @@ func convertToBin(n int) string {
 	return result
 }
 
-func printFile(filename string)  {
+func printFile(filename string) {
 	file, err := os.Open(filename)
 	if err != nil {
 		panic(err)
 	}
 
-	scanner := bufio.NewScanner(file)
+	printFileContents(file)
+}
+
+func printFileContents(reader io.Reader) {
+	scanner := bufio.NewScanner(reader)
 
 	for scanner.Scan() {
 		fmt.Println(scanner.Text())
 	}
 }
 
-func printContents(reader io.Reader) {
-
-}
-
-func forever()  {
+func forever() {
 	for {
 		fmt.Println("abc")
 	}
 }
 
 func main() {
+	fmt.Println("convertToBin results:")
 	fmt.Println(
-		convertToBin(5),
-		convertToBin(11),
-		convertToBin(13),
+		convertToBin(5),  // 101
+		convertToBin(13), // 1101
+		convertToBin(72387885),
 		convertToBin(0),
 	)
-	printFile("basic/branch/abc.txt")
+
+	fmt.Println("abc.txt contents:")
+	printFile("lang/basic/branch/abc.txt")
+
+	fmt.Println("printing a string:")
+	s := `abc"d"
+	kkkk
+	123
+
+	p`
+	printFileContents(strings.NewReader(s))
+
+	// Uncomment to see it runs forever
 	// forever()
 }
